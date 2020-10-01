@@ -63,7 +63,7 @@ function calculator(value){
     numbers[i] = newNumber;
     numbers.splice(i+1,1);
   }
-  return numbers[0];
+  isNaN(numbers[0]) ? 'Введено что-то не то' : numbers[0];
 }
 function countingNumbers(number1, number2, action) {
   switch (action) {
