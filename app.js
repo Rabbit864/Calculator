@@ -1,21 +1,22 @@
 function calculator(value){
-  if(typeof value !== 'string'){
-    return 'Не строка';
+  if(typeof value !== "string"){
+    return "Не строка";
   }
   let signs = value.match(/[+*/]|-(?!\d)|\((?!-\d+\))|(?<!\(-\d+)\)|(?<!\()-/g);
   let numbers = value.match(/\d+|(?<=\()\-?\d+(?=\))/g);
   let character = value.match(/[^0-9\+\-\*\/|(|)]/g);
 
   if(signs == null || numbers == null || numbers.length > 5 || character != null){
-    return 'Введенно не выражение';
+    return "Введенно не выражение";
   }
 
   for(i = signs.indexOf("(")+1; signs.indexOf("(") != -1 && signs.indexOf(")") != -1; i++){
+    
     if(signs[i] != ")"){
       if(signs[i] == "*" || signs[i] == "/"){
         let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
-        if(newNumber == 'Деление на 0'){
-          return 'Деление на 0';
+        if(newNumber == "Деление на 0"){
+          return "Деление на 0";
         }
         
         signs.splice(i,1);
@@ -25,11 +26,11 @@ function calculator(value){
       }
       
     }
-    if(signs[i] != ")" && (signs[i+1] != "*" || signs[i+1] != "/") && (signs[i-1] != "*" || signs[i-1] != "/")){
+    if(signs[i] != ")" && (signs[i+1] != "*" && signs[i+1] != "/") && (signs[i-1] != "*" && signs[i-1] != "/")){
       if(signs[i] == "+" || signs[i] == "-"){
         let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
-        if(newNumber == 'Деление на 0'){
-          return 'Деление на 0';
+        if(newNumber == "Деление на 0"){
+          return "Деление на 0";
         }
         signs.splice(i,1);
         
@@ -48,8 +49,8 @@ function calculator(value){
 
     if(signs[i] == "*" || signs[i] == "/"){
       let newNumber = countingNumbers(numbers[i],numbers[i+1],signs[i]);
-      if(newNumber == 'Деление на 0'){
-        return 'Деление на 0';
+      if(newNumber == "Деление на 0"){
+        return "Деление на 0";
       }
       signs.splice(i,1);
       numbers[i] = newNumber;
@@ -63,7 +64,8 @@ function calculator(value){
     numbers[i] = newNumber;
     numbers.splice(i+1,1);
   }
-  isNaN(numbers[0]) ? 'Введено что-то не то' : numbers[0];
+
+  return isNaN(numbers[0]) ? 'Введено что-то не то' : numbers[0];
 }
 function countingNumbers(number1, number2, action) {
   switch (action) {
@@ -72,12 +74,20 @@ function countingNumbers(number1, number2, action) {
     case "-":
     return Number(number1) - Number(number2);
     case "*":
-    return Number(number1) * Number(number2);
+    return +number1 * +number2;
     case "/":
     if (number2 !== "0") {
       return Number(number1) / Number(number2);
     } else {
-      return 'Деление на 0';
+      return "Деление на 0";
     }
   }
 }
+
+console.log(calculator("2*2"));
+console.log(calculator("2-2"));
+console.log(calculator("2/2"));
+console.log(calculator("2+2"));
+console.log(calculator("2/0"));
+console.log(calculator("2+(2-2*2)"));
+console.log(calculator("2+(2-2*2*2)"));
