@@ -12,8 +12,8 @@ function calculator(value){
 
   for(i = signs.indexOf('(')+1; signs.indexOf('(') !== -1 && signs.indexOf(')') !== -1; i++){
     
-    if(signs[i] !== ')'){
-      if(signs[i] === '*' || signs[i] === '/'){
+    if(signs[i] !== ')' && signs[i] === '*' || signs[i] === '/'){
+      
         let newNumber = calculateNumbers(numbers[i-1],numbers[i],signs[i]);
         if(newNumber === 'Деление на 0'){
           return 'Деление на 0';
@@ -23,8 +23,6 @@ function calculator(value){
         numbers[i-1] = newNumber;
         numbers.splice(i,1);
         i--;
-      }
-      
     }
     if(signs[i] !== ')' && (signs[i+1] !== '*' && signs[i+1] !== '/') && (signs[i-1] !== '*' && signs[i-1] !== '/')){
       if(signs[i] === '+' || signs[i] === '-'){
