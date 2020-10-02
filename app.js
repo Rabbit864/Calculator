@@ -14,7 +14,7 @@ function calculator(value){
     
     if(signs[i] !== ")"){
       if(signs[i] === "*" || signs[i] === "/"){
-        let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
+        let newNumber = calculateNumbers(numbers[i-1],numbers[i],signs[i]);
         if(newNumber === "Деление на 0"){
           return "Деление на 0";
         }
@@ -28,7 +28,7 @@ function calculator(value){
     }
     if(signs[i] !== ")" && (signs[i+1] !== "*" && signs[i+1] !== "/") && (signs[i-1] !== "*" && signs[i-1] !== "/")){
       if(signs[i] === "+" || signs[i] === "-"){
-        let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
+        let newNumber = calculateNumbers(numbers[i-1],numbers[i],signs[i]);
         if(newNumber == "Деление на 0"){
           return "Деление на 0";
         }
@@ -48,7 +48,7 @@ function calculator(value){
   for(i = 0; signs.indexOf("*") !== -1 || signs.indexOf("/") !== -1; i++){
 
     if(signs[i] == "*" || signs[i] == "/"){
-      let newNumber = countingNumbers(numbers[i],numbers[i+1],signs[i]);
+      let newNumber = calculateNumbers(numbers[i],numbers[i+1],signs[i]);
       if(newNumber == "Деление на 0"){
         return "Деление на 0";
       }
@@ -59,7 +59,7 @@ function calculator(value){
     }
   }
   for(i = 0; signs.indexOf("+") !== -1 || signs.indexOf("-") !== -1;){
-    let newNumber = countingNumbers(numbers[i],numbers[i+1],signs[i]);
+    let newNumber = calculateNumbers(numbers[i],numbers[i+1],signs[i]);
     signs.splice(i,1);
     numbers[i] = newNumber;
     numbers.splice(i+1,1);
@@ -67,17 +67,17 @@ function calculator(value){
 
   return isNaN(numbers[0]) ? 'Введено что-то не то' : numbers[0];
 }
-function countingNumbers(number1, number2, action) {
+function calculateNumbers(number1, number2, action) {
   switch (action) {
     case "+":
-    return Number(number1) + Number(number2);
+    return +number1 + +number2;
     case "-":
-    return Number(number1) - Number(number2);
+    return +number1 - +number2;
     case "*":
     return +number1 * +number2;
     case "/":
     if (number2 !== "0") {
-      return Number(number1) / Number(number2);
+      return +number1 / +number2;
     } else {
       return "Деление на 0";
     }
