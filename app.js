@@ -6,16 +6,16 @@ function calculator(value){
   let numbers = value.match(/\d+|(?<=\()\-?\d+(?=\))/g);
   let character = value.match(/[^0-9\+\-\*\/|(|)]/g);
 
-  if(signs == null || numbers == null || numbers.length > 5 || character != null){
+  if(signs === null || numbers === null || numbers.length > 5 || character !== null){
     return "Введенно не выражение";
   }
 
-  for(i = signs.indexOf("(")+1; signs.indexOf("(") != -1 && signs.indexOf(")") != -1; i++){
+  for(i = signs.indexOf("(")+1; signs.indexOf("(") !== -1 && signs.indexOf(")") !== -1; i++){
     
-    if(signs[i] != ")"){
-      if(signs[i] == "*" || signs[i] == "/"){
+    if(signs[i] !== ")"){
+      if(signs[i] === "*" || signs[i] === "/"){
         let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
-        if(newNumber == "Деление на 0"){
+        if(newNumber === "Деление на 0"){
           return "Деление на 0";
         }
         
@@ -26,8 +26,8 @@ function calculator(value){
       }
       
     }
-    if(signs[i] != ")" && (signs[i+1] != "*" && signs[i+1] != "/") && (signs[i-1] != "*" && signs[i-1] != "/")){
-      if(signs[i] == "+" || signs[i] == "-"){
+    if(signs[i] !== ")" && (signs[i+1] !== "*" && signs[i+1] !== "/") && (signs[i-1] !== "*" && signs[i-1] !== "/")){
+      if(signs[i] === "+" || signs[i] === "-"){
         let newNumber = countingNumbers(numbers[i-1],numbers[i],signs[i]);
         if(newNumber == "Деление на 0"){
           return "Деление на 0";
@@ -39,13 +39,13 @@ function calculator(value){
         i--;
       }
     }
-    if(signs[i] == ")" && signs[i-1] == "("){
+    if(signs[i] === ")" && signs[i-1] === "("){
       signs.splice(i,1);
       signs.splice(i-1,1);
     }
     
   }
-  for(i = 0; signs.indexOf("*") != -1 || signs.indexOf("/") != -1; i++){
+  for(i = 0; signs.indexOf("*") !== -1 || signs.indexOf("/") !== -1; i++){
 
     if(signs[i] == "*" || signs[i] == "/"){
       let newNumber = countingNumbers(numbers[i],numbers[i+1],signs[i]);
@@ -58,7 +58,7 @@ function calculator(value){
       i--;
     }
   }
-  for(i = 0; signs.indexOf("+") != -1 || signs.indexOf("-") != -1;){
+  for(i = 0; signs.indexOf("+") !== -1 || signs.indexOf("-") !== -1;){
     let newNumber = countingNumbers(numbers[i],numbers[i+1],signs[i]);
     signs.splice(i,1);
     numbers[i] = newNumber;
